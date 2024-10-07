@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup on Leave</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+    <style>
+        /* Popup styles */
+        .popup {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.4); 
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .text-color{
+            color: #f34f00;
+        }
+        .popup-para{
+            font-size: 22px;
+            text-transform: uppercase;
+        }
+        .popup.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .popup-content {
+            background-color: #fefefe;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 6rem;
+            padding: 50px 40px;
+            border: 1px solid #888;
+            width: 100%;
+            height: 340px;
+            max-width: 700px;
+            text-align: center;
+            border-radius: 8px;
+            animation: slideDown 0.5s ease forwards;
+        }
+        .popup-content h1{
+            font-size: 46px;
+            font-family: sans-serif;
+        }
+        .popup-content p{
+            font-size: 18px;
+            font-family: sans-serif ;
+            line-height: 30px;
+        }
+        #close-btn {
+            background-color: #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            float: right;
+            font-size: 30px;
+            font-weight: bold;
+            margin-top: -4.2rem;
+            margin-right: -3rem;
+            cursor: pointer;
+            /* border: 2px solid lightgrey; */
+        }
+        .popup-content a #stay-btn{
+            background-color: #000;
+            width: 40%;
+            cursor: pointer;
+            border-radius: 50px;
+            padding: 18px;
+            color: #fff;
+            font-size: 22px;
+            margin-top: 20px;
+        }
+        .popup-content a #stay-btn:hover{
+            background-color: darkgray;
+            border: 1px solid darkgray;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="leave-popup" class="popup">
+        <div class="popup-content">
+            <span id="close-btn">&times;</span>
+            <h1>Wait! Are You Sure<span class="text-color">You Want To Leave?</span></h1>
+            <p>This may be your <span class="popup-para">Last Chance</span>  to Schedule Ecommerce <br> Scaling Strategy Sessions!</p>
+            <a href="https://calendly.com/ebcnl/ebc-strategie-call-lp-dutch?month=2024-07">
+                <button id="stay-btn">Shedule My Call</button>
+            </a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const popup = document.getElementById('leave-popup');
+            const stayBtn = document.getElementById('stay-btn');
+            const closeBtn = document.getElementById('close-btn');
+            let hasPopupShown = false; // Flag to check if the popup has been shown
+
+            stayBtn.onclick = function() {
+                popup.classList.remove('show');
+                setTimeout(() => popup.style.display = 'none', 500);
+            };
+
+            closeBtn.onclick = function() {
+                popup.classList.remove('show');
+                setTimeout(() => popup.style.display = 'none', 500);
+            };
+
+            window.onclick = function(event) {
+                if (event.target == popup) {
+                    popup.classList.remove('show');
+                    setTimeout(() => popup.style.display = 'none', 500);
+                }
+            };
+
+            document.addEventListener('mouseleave', function(e) {
+                // Show the popup if the mouse leaves the window and the popup hasn't been shown yet
+                if (e.clientY <= 0 && !hasPopupShown) {
+                    hasPopupShown = true;
+                    popup.style.display = 'block';
+                    setTimeout(() => popup.classList.add('show'), 10);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
